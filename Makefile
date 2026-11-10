@@ -3,13 +3,19 @@ NAME		= ft_ping
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror
 CPPFLAGS	= -Iinclude -MMD -MP
+LDLIBS		= -lm
 
 SRC_DIR		= src
 OBJ_DIR		= obj
 
 SRCS		= main.c \
 			  args.c \
-			  usage.c
+			  usage.c \
+			  init.c \
+			  packet.c \
+			  receive.c \
+			  loop.c \
+			  stats.c
 
 OBJS		= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS		= $(OBJS:.o=.d)
@@ -17,7 +23,7 @@ DEPS		= $(OBJS:.o=.d)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LDLIBS) -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
